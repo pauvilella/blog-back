@@ -4,7 +4,7 @@ from application.config.app_settings import app_settings
 from infra.databases.postgres import Base, get_db
 from pydantic import EmailStr
 from sqlalchemy import Boolean, Column, Integer, LargeBinary, PrimaryKeyConstraint, String, UniqueConstraint
-from users.core.dtos.user import UserDTO
+from users.core.dtos.user import Role, UserDTO
 from users.core.ports.user import UserPort
 
 
@@ -21,6 +21,7 @@ class User(Base):
     hashed_password = Column(LargeBinary, nullable=False)
     first_name = Column(String(225), nullable=False)
     last_name = Column(String(225), nullable=False)
+    role = Column(String(225), nullable=False, default=Role.READER.value)
     is_active = Column(Boolean, default=False)
 
     PrimaryKeyConstraint("id", name="pk_user_id")
@@ -37,6 +38,7 @@ class User(Base):
             hashed_password=self.hashed_password,
             first_name=self.first_name,
             last_name=self.last_name,
+            role=self.role,
             is_active=self.is_active,
         )
 
@@ -49,6 +51,8 @@ class User(Base):
             self.first_name = user.first_name
         if user.last_name:
             self.last_name = user.last_name
+        if user.role:
+            self.role = user.role
         if user.is_active:
             self.is_active = user.is_active
 
@@ -60,6 +64,7 @@ class User(Base):
             hashed_password=user.hashed_password,
             first_name=user.first_name,
             last_name=user.last_name,
+            role=user.role.value,
             is_active=user.is_active,
         )
 

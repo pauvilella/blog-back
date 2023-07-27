@@ -36,6 +36,7 @@ def signup(payload: UserSignupRequest) -> UserSignupResponse:
         hashed_password=hashed_password,
         first_name=payload.first_name,
         last_name=payload.last_name,
+        role=payload.role,
         is_active=True,
     )
     user: UserDTO = SignupUserUseCase().signup_user(user_dto)
@@ -74,5 +75,6 @@ def me(data_from_jwt: dict = Depends(handle_jwt)) -> UserMeResponse:
         email=data_from_jwt["user_email"],
         first_name=data_from_jwt["user_first_name"],
         last_name=data_from_jwt["user_last_name"],
+        role=data_from_jwt["user_role"],
         is_active=data_from_jwt["user_is_active"],
     )

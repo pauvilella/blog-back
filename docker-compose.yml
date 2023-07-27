@@ -1,0 +1,40 @@
+---
+version: "3.7"
+
+services:
+  blog-back-app:
+    container_name: blog-back-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        POETRY_DEV: true
+    env_file:
+      - env-local
+    ports:
+      - 8000:80
+      - 5678:5678
+    volumes:
+      - ./src/:/app:cached
+    command: ["sh", "-c", "alembic upgrade head && /entrypoint.sh run-devel"]
+    depends_on:
+      blog-back-db:
+        condition: service_healthy
+
+  blog-back-db:
+    container_name: blog-back-db
+    image: postgres:14
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "blog-back"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    env_file:
+      - env-local
+    volumes:
+      - blog-back-db-data:/var/lib/postgresql/data
+
+volumes:
+  blog-back-db-data:

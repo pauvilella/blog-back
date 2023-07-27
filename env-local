@@ -1,0 +1,6 @@
+POSTGRES_USER=blog-back
+POSTGRES_PASSWORD=blog-back
+POSTGRES_DB=blog-back
+POSTGRES_HOST=blog-back-db
+POSTGRES_PORT=5432
+APP_SECRET_KEY=vdasickghOsyclqoWpPyKvLOyHG8cw

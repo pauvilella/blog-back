@@ -1,0 +1,49 @@
+{
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${workspaceFolder}/"
+    },
+    "editor.formatOnSave": true,
+    "ruff.args": ["--config=./pyproject.toml"],
+    "ruff.path": [".venv/bin/ruff"],
+    "[python]": {
+        "gitlens.codeLens.symbolScopes": [
+            "!Module"
+        ],
+        "editor.wordBasedSuggestions": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true,
+            "source.fixAll.ruff": true,
+            "source.organizeImports.ruff": true
+        }
+    },
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs":["--config=./pyproject.toml"],
+    "python.languageServer": "Pylance", // use Pylance to get advantatge of it's features
+    "python.analysis.autoImportCompletions": true, // Enable feature for auto imports
+    "files.associations": {
+        "env-local*": "shellscript"
+    },
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/"
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#f0b9a6",
+        "activityBar.background": "#f0b9a6",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#bb461f",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#f0b9a6",
+        "statusBar.background": "#e9967a",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#e2734e",
+        "statusBarItem.remoteBackground": "#e9967a",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#e9967a",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#e9967a99",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#E9967A",
+}

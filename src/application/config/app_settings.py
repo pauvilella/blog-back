@@ -12,6 +12,7 @@ class AppSettings(BaseSettings):
     CORS_ORIGIN_WHITELIST = ','.join(
         [
             'http://localhost:8000',
+            'http://localhost:3000',
         ],
     )
 

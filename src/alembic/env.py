@@ -4,6 +4,7 @@ from alembic import context
 from application.config.app_settings import app_settings
 from infra.databases.postgres import Base
 from sqlalchemy import engine_from_config, pool
+from users.adapters.author_postgres_repository import *  # noqa
 from users.adapters.user_postgres_repository import *  # noqa
 
 

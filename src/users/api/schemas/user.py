@@ -1,12 +1,10 @@
 from pydantic import BaseModel, EmailStr
-from users.core.dtos.user import Role
 
 
 class UserBase(BaseModel):
     email: EmailStr
     first_name: str
     last_name: str
-    role: Role
 
 
 class UserLoginRequest(BaseModel):

@@ -2,7 +2,8 @@ import logging
 
 from application.config.app_settings import app_settings
 from infra.databases.postgres import Base
-from sqlalchemy import Column, Integer, PrimaryKeyConstraint, String, Text
+from sqlalchemy import Column, PrimaryKeyConstraint, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from users.core.dtos.author import AuthorDTO
 from users.core.ports.author import AuthorPort
 
@@ -15,7 +16,8 @@ class Author(Base):
 
     __tablename__ = "authors"
 
-    id = Column(Integer, nullable=False, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, nullable=False)
+    user: Mapped["User"] = relationship(back_populates="author")
     abstract = Column(Text, nullable=True, unique=False)
     job_title = Column(String(225), nullable=True)
     linkedin_profile_link = Column(String(225), nullable=True)

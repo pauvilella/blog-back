@@ -3,7 +3,8 @@ import logging
 from application.config.app_settings import app_settings
 from infra.databases.postgres import Base, get_db
 from pydantic import EmailStr
-from sqlalchemy import Boolean, Column, Integer, LargeBinary, PrimaryKeyConstraint, String, UniqueConstraint
+from sqlalchemy import Boolean, Column, ForeignKey, LargeBinary, PrimaryKeyConstraint, String, UniqueConstraint
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from users.core.dtos.user import UserDTO
 from users.core.ports.user import UserPort
 
@@ -16,11 +17,13 @@ class User(Base):
 
     __tablename__ = "users"
 
-    id = Column(Integer, nullable=False, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, nullable=False)
     email = Column(String(225), nullable=False, unique=True)
     hashed_password = Column(LargeBinary, nullable=False)
     first_name = Column(String(225), nullable=False)
     last_name = Column(String(225), nullable=False)
+    author_id: Mapped[int] = mapped_column(ForeignKey("authors.id", ondelete="CASCADE"))
+    author: Mapped["Author"] = relationship(back_populates="user")
     is_active = Column(Boolean, default=False)
 
     PrimaryKeyConstraint("id", name="pk_user_id")

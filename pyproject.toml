@@ -62,6 +62,7 @@ ignore = [
   "N818",
   "N804", # First argument of a class method should be named `cls`
   "F811",
+  "F821", # Undefined name
 ] # Error suffix on exception class names
 
 target-version = "py39"

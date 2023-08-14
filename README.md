@@ -17,6 +17,7 @@ Backend API for blog application.
 - [Alembic](#alembic)
   - [Create a new migration version](#create-a-new-migration-version)
   - [Run the new version migrations](#run-the-new-version-migrations)
+- [CI](#ci)
 
 ## Setup
 
@@ -74,3 +75,6 @@ We could manually execute this command:
 docker compose run --rm blog-back-app bash -c 'alembic upgrade head'
 ```
 Nevertheless, it is added in the command locally, so it will run everytime we start our appp. Checkout the **docker-compose.yml** file.
+
+## CI
+Everytime that we push to the `main` branch, a GitHub action will get triggered that will build and push the docker image to the public Docker Hub repository.

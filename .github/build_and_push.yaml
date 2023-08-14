@@ -1,0 +1,53 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build_and_push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+
+      - name: 🔐 Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🏗 Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: 🏗 Prepare Image tags
+        shell: bash
+        id: prepare_tags
+        env:
+          DOCKERHUB_REGISTRY: pauvilellastub
+        run: |
+          TAG=$(echo $GITHUB_SHA | head -c7)
+          TAGS="${DOCKERHUB_REGISTRY}/blog-back:${TAG}"
+          TAGS="$TAGS, ${DOCKERHUB_REGISTRY}/blog-back:latest"
+          echo "tags=$TAGS" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "tagged_image=${DOCKERHUB_REGISTRY}/blog-back:${TAG}" >> $GITHUB_OUTPUT
+      
+      - name: 🏗 Build and Push Image 🚀
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.prepare_tags.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+          

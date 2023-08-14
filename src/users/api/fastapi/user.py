@@ -38,7 +38,7 @@ def signup(payload: UserSignupRequest) -> UserSignupResponse:
         last_name=payload.last_name,
         is_active=True,
     )
-    user: UserDTO = SignupUserUseCase().signup_user(user_dto)
+    user: UserDTO = SignupUserUseCase().signup_user(user_dto, payload.is_author)
     return UserSignupResponse.parse_obj(user)
 
 

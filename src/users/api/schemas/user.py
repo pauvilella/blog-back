@@ -19,6 +19,7 @@ class UserLoginResponse(BaseModel):
 
 class UserSignupRequest(UserBase):
     password: str
+    is_author: bool
 
 
 class UserSignupResponse(UserBase):

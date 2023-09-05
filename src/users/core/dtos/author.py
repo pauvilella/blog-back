@@ -10,7 +10,7 @@ class AuthorDTO(BaseModel):
     abstract: Optional[str]
     job_title: Optional[str]
     linkedin_profile_link: Optional[str]
-    github_profile_link: Optional[int]
+    github_profile_link: Optional[str]
 
     def __repr__(self):
         return f"""AuthorDTO (id={self.id}, job_title={self.email},

@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from application.config.app_settings import app_settings
 from infra.databases.postgres import Base, get_db
@@ -86,3 +87,14 @@ class AuthorsPostgresRepository(AuthorPort):
                 return db_author.to_dto()
         except Exception:
             logger.exception("Error creating author in PostgreSQL")
+
+    def get_authors(self) -> List[AuthorDTO]:
+        try:
+            logger.info("Getting all authors from PostgreSQL")
+            with get_db() as session:
+                authors = session.query(Author).all()
+                logger.debug(authors)
+                logger.info("All authors retrieved successfully!")
+                return [author.to_dto() for author in authors]
+        except Exception:
+            logger.exception("Error getting all authors from PostgreSQL")

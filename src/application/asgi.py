@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from users.api.fastapi.author import router as authors_router
 from users.api.fastapi.user import router as users_router
 
 from application.api.router import router as application_router
@@ -32,3 +33,4 @@ app.add_middleware(
 
 app.include_router(application_router, prefix='/api')
 app.include_router(users_router, prefix='/api')
+app.include_router(authors_router, prefix='/api')
